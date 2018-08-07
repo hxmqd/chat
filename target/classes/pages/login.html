@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+	<link rel="stylesheet" href="../static/css/login.css" >
+    <link rel="stylesheet" href="../static/css/font-awesome/font-awesome.min.css" />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.css"  />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.structure.css"  />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.theme.css"  />
+    <link rel="stylesheet" href="../static/css/bootstrap/bootstrap.css"  />
+</head>
+<body style="background-color: #333333; color:#fff;">
+<div class="container wrap1" style="height:510px;">
+            <h2 class="title mg-b20 text-center">交通银行聊天系统登录页面</h2>
+            <div class="pd-sm-50 pd-xs-20 main_content">
+                <p class="text-center font16">用户登录</p>
+                
+                <form action="/user/login" method="post">
+                    <div class="form-group mg-t20">
+                        <input type="text" class="login_input" id="user" name="username" placeholder="请输入用户名" />
+                    </div>
+                    <div class="form-group mg-t20">
+                        <input type="password" class="login_input" id="password" name="password" placeholder="请输入密码" />
+                    </div>
+                    <div class="checkbox mg-b25">
+                        <label>
+                            <input type="checkbox" />记住我的登录信息
+                        </label>
+                    </div>
+                    <input style="margin-top: 20px;" type="submit" class="login_btn login" value="登录"/>
+                    <a class="register" href="/register"><span>立即注册</span></a>
+               </form>
+               
+        </div><!--row end-->
+    </div><!--container end-->
+<script src="../static/js/jQuery/jQuery-2.1.4.min.js" ></script>
+<script src="../static/js/bootstrap/bootstrap.js" ></script>
+<script src="../static/js/jQuery-ui/jquery-ui.js" ></script>
+</body>
+</html>

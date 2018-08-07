@@ -1,0 +1,63 @@
+/* @font-face {
+  font-family: 'icomoon';
+  src:  url'{[[@{/images/login/icomoon.eot?u4m6fy}]]}';
+  src:  url'{[[@{/images/login/icomoon.eot?u4m6fy#iefix}]]}' format('embedded-opentype'),
+    	url'{[[@{/images/login/icomoon.ttf?u4m6fy}]]}' format('truetype'),
+    	url'{[[@{/images/login/icomoon.woff?u4m6fy}]]}' format('woff'),
+    	url'{[[@{/images/login/icomoon.svg?u4m6fy#icomoon}]]}' format('svg');
+  src:  url('fonts/icomoon.eot?u4m6fy');
+  src:  url('fonts/icomoon.eot?u4m6fy#iefix') format('embedded-opentype'),
+    	url('fonts/icomoon.ttf?u4m6fy') format('truetype'),
+    	url('fonts/icomoon.woff?u4m6fy') format('woff'),
+    	url('fonts/icomoon.svg?u4m6fy#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+} */
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+/*   font-family: 'icomoon' !important; */
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body{color:#fff; font-family:"微软雅黑"; font-size:14px;}
+.wrap1{position:absolute; top:0; right:0; bottom:0; left:0; margin:auto }/*把整个屏幕真正撑开--而且能自己实现居中*/
+.main_content{margin-left:auto; margin-right:auto; text-align:left; float:none; border-radius:8px; height:360px; width:475px;}
+.form-group{position:relative;}
+.login_btn{display:block; background:#3872f6; color:#fff; font-size:15px; width:100%; line-height:50px; border-radius:3px; border:none; }
+.login_input{width:100%; border:1px solid #3872f6; border-radius:3px; line-height:40px; padding:2px 5px 2px 30px; background:none;}
+.icon_font{position:absolute; bottom:16px; left:10px; font-size:24px; color:#3872f6;}
+.font16{font-size:20px;}
+.mg-t20{margin-top:20px;}
+@media (min-width:200px){.pd-xs-20{padding:20px;}}
+@media (min-width:768px){.pd-sm-50{padding:20px 50px 50px 50px;}}
+#grad {
+background: -webkit-linear-gradient(#4990c1, #52a3d2, #6186a3); /* Safari 5.1 - 6.0 */
+background: -o-linear-gradient(#4990c1, #52a3d2, #6186a3); /* Opera 11.1 - 12.0 */
+background: -moz-linear-gradient(#4990c1, #52a3d2, #6186a3); /* Firefox 3.6 - 15 */
+background: linear-gradient(#4990c1, #52a3d2, #6186a3); /* 标准的语法 */
+}
+
+.login{
+	margin-bottom: 10px;
+}
+.title{
+	font-size: 36px;
+	margin-bottom: 20px;
+}
+.register{
+	float: right;
+	color: #fff;
+}
+.register:hover{
+	color: #fff;
+}
+

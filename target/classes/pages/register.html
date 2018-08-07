@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+	<link rel="stylesheet" href="../static/css/login.css" >
+    <link rel="stylesheet" href="../static/css/font-awesome/font-awesome.min.css" />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.css"  />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.structure.css"  />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.theme.css"  />
+    <link rel="stylesheet" href="../static/css/bootstrap/bootstrap.css"  />
+</head>
+<body style="background-color: #333333; color:#fff;">
+<div class="container wrap1" style="height:510px;">
+            <h2 class="title mg-b20 text-center">交通银行聊天系统注册页面</h2>
+            <div class="pd-sm-50 pd-xs-20 main_content">
+                <p class="text-center font16">用户注册</p>
+                
+                <form action="/user/register" method="post" target="rFrame" onsubmit="return check()">
+                    <div class="form-group mg-t20">
+                        <input type="text" class="login_input" id="user" name="username" placeholder="请输入用户名" />
+                    </div>
+                    <div class="form-group mg-t20">
+                        <input type="password" class="login_input" id="password" name="password" placeholder="请输入密码" />
+                    </div>
+                    <input style="margin-top: 30px;" type="submit" class="login_btn login" value="注册"/>
+               </form>
+               		<a class="register" href="/pages/login.html"><span>返回登录</span></a>
+               <iframe id="rFrame" name="rFrame" src="about:blank" style="display:none;"></iframe>
+        </div><!--row end-->
+    </div><!--container end-->
+<script src="../static/js/jQuery/jQuery-2.1.4.min.js" ></script>
+<script src="../static/js/bootstrap/bootstrap.js" ></script>
+<script src="../static/js/jQuery-ui/jquery-ui.js" ></script>
+<script type="text/javascript">
+function check() {
+	var name = document.getElementById("user").value;
+	var password = document.getElementById("password").value;
+	if(name ==  null || name == ''){
+		alert("用户名不能为空");
+	    return false;
+	}
+	if(password ==  null || password == ''){
+		alert("密码不能为空");
+	    return false;
+	}
+	alert("注册成功");
+	return true;
+}
+</script>
+</body>
+</html>

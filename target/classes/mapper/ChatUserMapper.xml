@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxm.chat.security.mapper.ChatUserMapper">
+  <resultMap id="BaseResultMap" type="com.hxm.chat.security.bean.ChatUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, name, password
+  </sql>
+  
+   <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectAllUserName"  resultType="java.lang.String">
+    select name
+    from user
+  </select>
+  
+   <select id="countByUserName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from user
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="com.hxm.chat.security.bean.ChatUser">
+    insert into user (id, name, password)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>

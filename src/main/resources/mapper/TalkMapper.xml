@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxm.chat.mapper.TalkMapper">
+	<resultMap id="ResultMap" type="com.hxm.chat.bean.Talk">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="src_user" jdbcType="VARCHAR" property="srcUser" />
+		<result column="dest_user" jdbcType="VARCHAR" property="destUser" />
+		<result column="content" jdbcType="LONGVARCHAR" property="content" />
+    	<result column="time" jdbcType="TIMESTAMP"  property="time" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, src_user, dest_user, content, time
+	</sql>
+	<select id="selectByDestUser" parameterType="java.lang.String"
+		resultMap="ResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from talk
+		where type = 1 and dest_user = #{destUser,jdbcType=VARCHAR} 
+	</select>
+	<select id="selectGroupTalk" resultMap="ResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from talk
+		where  type = 0 and time > DATE_SUB(NOW(),INTERVAL 1 HOUR)
+
+	</select>
+
+	<delete id="deleteByDestUser" parameterType="java.lang.String">
+		delete from talk
+		where dest_user = #{destUser,jdbcType=VARCHAR}
+	</delete>
+	
+	<delete id="deleteById" parameterType="java.lang.String">
+		delete from talk
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.hxm.chat.bean.Talk">
+		insert into talk (id, src_user, dest_user, content, type
+		)
+		values (#{id,jdbcType=VARCHAR}, #{srcUser,jdbcType=VARCHAR},
+		#{destUser,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR},
+		#{type,jdbcType=INTEGER}
+		)
+	</insert>
+
+</mapper>

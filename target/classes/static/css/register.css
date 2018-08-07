@@ -1,0 +1,260 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color:rgb(245,245,245);
+}
+a:link{
+    text-decoration: none;
+}
+a:visited{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+a:active{
+    text-decoration: none;
+}
+ul li {
+    list-style: none;
+}
+/* header style */
+header.row {
+    background-color: #1E1E1E;
+    height: 50px;
+    margin: 0;
+}
+header.row .center{
+	width:1200px;
+	margin:0 auto;
+}
+p.name{
+    display: inline-block;
+    float:left;
+    line-height: 50px;
+    margin: 0 0 0 15px;
+    color: white;
+    font-size: 28px;
+    font-weight: 520;
+    font-family: ���Ŀ���;
+}
+header .navbar-nav {
+    min-height: 50px;
+    line-height: 50px;
+}
+header .navbar-text {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+header a:link {
+    color: #fff;
+    font-size: 16px;
+}
+header a:visited {
+    color: #fff;
+    font-size: 16px;
+}
+header a:hover {
+    color: #fff;
+    font-size: 16px;
+}
+header a:active {
+    color: #fff;
+    font-size: 16px;
+}
+header li.navbar-btn {
+    margin: 0;
+    width: 120px;
+    height: 50px;
+    text-align: center;
+}
+header ul.right-nav {
+    float: right;
+}
+.right-nav li.active a{
+    color: deepskyblue;
+}
+.right-nav li:hover a{
+    color: deepskyblue;
+    border-bottom: 2px solid lightskyblue;
+}
+.main-center{
+	width:1200px;
+	height:760px;
+	margin:20px auto;
+	background-color:#fff;
+	border: 2px solid #e2e2e7;
+}
+/* nav style */
+nav {
+    width: 100%;
+    height: 110px;
+    text-align: center;
+    font-size: 30px;
+    color: #333;
+}
+nav p {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 0;
+}
+
+
+/* box style */
+.box{
+    position: relative;
+    width: 880px;
+    height: 580px;
+    border: 1px solid #e8e8e8;
+    margin: 0 auto;
+    padding-top: 60px;
+    padding-left: 140px;
+    margin-bottom:60px;
+}
+.box a.pen{
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width:46px;
+    height:46px;
+    background-image: url(../images/register/pen.png);
+}
+
+.box form{
+    width: 740px;
+}
+.box form label span{
+    color: red;
+}
+.box .form-horizontal .form-group{
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 20px;
+}
+.box form ul.navbar{
+    min-height: 34px;
+    line-height: 34px;
+    margin: 0;
+    padding: 0;
+}
+.box form ul.navbar li a{
+    color: #333;
+}
+.box form .form-group input{
+    display: inline-block;
+}
+.box form .form-group button{
+    display: inline-block;
+    width: 112px;
+    height: 32px;
+    color: #333;
+}
+.box form .form-group .col-sm-6 span{
+    display: inline-block;
+    width: 93px;
+    height: 15px;
+    margin-top: 5px;
+    margin-right: 3px;
+    background-image: url(../images/register/passOthers.png);
+    text-align: center;
+    line-height: 15px;
+    color: #fff;
+    font-size: 12px;
+}
+.box form .form-group .col-sm-6 span.active{
+    background-image: url(../images/register/passSelected.png);
+}
+.box form .form-group .submit{
+    width: 242px;
+    height: 44px;
+    background-image: url(../images/register/submit.png);
+    border: none;
+    color: #fff;
+    margin-top: 10px;
+}
+.box form .form-group .bottom{
+    display: block;
+    color: #808080;
+    margin-top: 10px;
+    font-size: 12px;
+}
+.box form .form-group .bottom:hover{
+	color: dodgerblue;
+}
+
+/* ����ҳ��У�� */
+.userNameIdOuter{
+	display:none;
+}
+.passWordIdOuter{
+	display:none;
+}
+.confirmIdOuter{
+	display:none;
+} 
+.contactPersonIdOuter{
+	display:none;
+}
+.emailIdOuter{
+	display:none;
+}
+/* .verificationIdOuter{
+	display:none;
+} */
+.phoneNumberIdOuter{
+	display:none;
+}
+.import_prompt{
+    border:solid 1px #ffcd00;
+    background-color:#ffffda;
+    padding:0px 10px;
+    line-height:32px;
+}
+/*���ı������ݲ�����Ҫ��ʱ����ʾ�ı�����ʽ*/
+.error_prompt{
+    border:solid 1px #ff3300;
+    background-color:#fff2e5;
+    padding:0px 10px;
+    line-height:32px;
+}
+/*���ı�������������ȷʱ����ʾ�ı�����ʽ*/
+/*.ok_prompt{
+    border:solid 1px #01be00;
+    background-color:#e6fee4;
+    padding:0px 10px;
+  	line-height:34px;
+}*/
+/*���ı�������������ȷʱ����ȷ�Թ���ʽ*/
+.ok_prompt{
+	display: inline-block;
+	height:34px;
+  	line-height:34px;
+/*   	color: #6CAF00; */
+  	color: green;
+  	font-weight: bold;
+}
+.none{
+	display:none;
+}
+/*footer style*/
+footer {
+    width: 100%;
+    text-align: center;
+    height: 130px;
+    padding-top: 30px;
+    background-color: #1E1E1E;
+}
+footer p {
+    color: #9096a2;
+    font-size: 14px;
+}
+.min-h{
+	min-height: 729px;
+}
+
+
+
+
+

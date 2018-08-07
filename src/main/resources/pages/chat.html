@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>交通银行聊天系统</title>
+    <link rel="stylesheet" href="../static/css/chat.css" >
+    <link rel="stylesheet" href="../static/css/font-awesome/font-awesome.min.css" />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.css"  />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.structure.css"  />
+    <link rel="stylesheet" href="../static/css/jquery-ui/jquery-ui.theme.css"  />
+    <link rel="stylesheet" href="../static/css/bootstrap/bootstrap.css"  />
+    <style>
+    #list li:hover{
+    	background:#666
+    } 
+     #list li {
+    	font-size:19px;
+    	font-weight:bold;
+    	text-align:center;
+    } 
+    </style>
+</head>
+<body>
+    
+<div id="content" class="content">
+    <div class="chat-body">
+        <div class="left">
+            <div class="title">
+            	<img src="../static/image/head.png"><span id="name"></span>
+            	<a href="/login" onclick="disconnect();" title="退出" style="float: right;"><img src="../static/image/operate.png"></a>
+            </div>
+            <div class="select">
+            	<ul>
+            		<li onclick="setSingle()" style="border-right: 1px solid #111;"><a href=""  title="通讯录"><img src="../static/image/person.png"></a></li>
+            		<li onclick="setGroup()"><a  title="群聊"><img src="../static/image/chat.png"></a></li>
+            	</ul>
+            </div>
+            <div class="friends" id="friends"><ul id="list">
+                
+            </ul></div>
+        </div>
+        <div class="top" id="top" style="font-size:20px;font-weight:bold">群聊</div>
+        <div class="center" id="response">
+			<div id="groupTalk" style="width:100%; height: 100%; padding:20px; overflow-x: hidden; overflow-y: scroll;"></div>
+        </div>
+        <div class="bottom">
+			<textarea id="message"></textarea>
+			<a href="javascript:;" id="personChart" onclick="send1();" style="display:none; background-color:#228B22;color:#fff">发送</a>
+			<a href="javascript:;" id="groupChart" onclick="send2();" style="background-color:#228B22;color:#fff">发送</a>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="../static/js/sockjs.min.js"></script>
+<script src="../static/js/stomp.js"></script>
+<script>		
+		var current_user = null;
+		var dest_user = null;
+		var stompClient = null;
+		var curDIV = "#groupTalk";
+		var tip = null;
+		$(function () {
+	        // 建立websocket连接
+	        userNow();
+	        connect();
+	    });
+		
+		function userNow() {
+			$.ajax({
+				type : 'GET',
+				url : "/user/getCurrentUser",
+				success : function(response) {
+					current_user = response;
+					$("#name").html(response);
+					//获取离线消息
+			        getoffLineTalk(response);
+			        getoffLineGroupTalk();
+				}
+			});
+		}
+		
+		function getoffLineTalk(user){
+			$.ajax({
+				type : 'GET',
+				url : "/talk/offLineTalk?user="+user,
+				success : function(response) {
+					for(var i=0; i<response.length; i++){
+						var html = "<p style='backgroud:#fff; padding:5px 10px;'><span style='color: blue; font-weight:bold;'>" + response[i].srcUser+":</span>";
+	        			html += "<span style='color: black; font-weight:bold;'>" + response[i].content + "</span></p>" ;
+						var DIVID = "#"+response[i].srcUser;
+		                $(DIVID).append(html);
+					}
+				}
+			});
+		}
+		function getoffLineGroupTalk(){
+			$.ajax({
+				type : 'GET',
+				url : "/talk/offLineGroupTalk",
+				success : function(response) {
+					for(var i=0; i<response.length; i++){
+						var html = "<p style='backgroud:#fff; padding:5px 10px;'><span style='color: blue; font-weight:bold;'>" + response[i].srcUser+":</span>";
+	        			html += "<span style='color: black; font-weight:bold;'>" + response[i].content + "</span></p>" ;
+						var DIVID = "#groupTalk";
+		                $(DIVID).append(html);
+					}
+				}
+			});
+		}
+
+	    function disconnect() {
+	    	stompClient.close();
+	    }
+	    function connect() {
+	        var socket = new SockJS('/websocket');
+	        stompClient = Stomp.over(socket);
+	        stompClient.connect({}, function (frame) {
+	        	//获取在线离线好友列表
+	        	getOnlineUser();
+			    getOfflineUser();
+	            // 订阅 /topic 实现群聊
+	            stompClient.subscribe('/topic', function (message) {
+	            	var arr = message.body.split("|");
+	            	if(arr.length==2){
+	            		var html = "<p style='backgroud:#fff; padding:5px 10px;'><span style='color: blue; font-weight:bold;'>" + arr[0]+":</span>";
+	        			html += "<span style='color: black; font-weight:bold;'>" + arr[1] + "</span></p>" ;
+	            	}else{
+	            		var html = "<p style='backgroud:#fff; padding:5px 10px;'><span style='color: blue; font-weight:bold;'>" + arr[1]+":</span>";
+	        			html += "<span style='color: black; font-weight:bold;'>" + arr[2] + "</span></p>" ;
+	            	}
+	                $("#groupTalk").append(html);	            	
+	            });
+	            // 订阅 /chat 实现点对点聊
+	            stompClient.subscribe('/user/chat', function (message) {
+					var arr = message.body.split("|");
+					var html = "<p style='padding:5px 10px;'><span style='color: blue; font-weight:bold;'>" + arr[0]+":</span>";
+					html += "<span style='color: black; font-weight:bold;'>" + arr[1] + "</span></p>" ;
+					var DIVID = "#"+arr[0];
+	                $(DIVID).append(html);
+					var listID = "#list"+arr[0];
+	                tips(listID);
+	            });
+	        });
+	    }
+	    function tips(id){
+	    	tip = setInterval(function(){ 
+            	var color = $(id).css("color");
+     	 		if(color != "rgb(0, 128, 0)"){
+     	 			$(id).css("color","rgb(0,128,0)");
+     	 		}
+     	 		else{
+     	 			$(id).css("color","rgb(255,255,0)");
+     	 		}
+            }, 300);
+  		}
+	    function stopTips(id) {
+	           clearInterval(tip);
+	 		   $(id).css("color","rgb(255,255,0)");
+
+        }
+	    
+	    function getOnlineUser(){
+	    	$.ajax({
+				type : 'GET',
+				url : "/user/getOnlineUser",
+				success : function(response) {
+					var html = "<li style='color:#1C86EE'>在线用户</li>";
+	 				var tab = "";
+	 				for ( var i in response) {
+	 					html += "<li style='color:yellow' id='list"+response[i]+"'onClick=\"setDestUser('"+response[i]+"',1)\">" + response[i] + "</li>";
+	 					tab += "<div id='"+response[i]+"' style='width:100%;height:100%; padding:20px; display:none;'></div>";
+	 				}
+	 				$("#list").append(html);
+	 				$("#response").append(tab);
+				}
+			});
+	    }
+	    function getOfflineUser(){
+	    	$.ajax({
+				type : 'GET',
+				url : "/user/getOfflineUser",
+				success : function(response) {
+					var html = "<li style='color:#B8B8B8'>离线用户</li>";
+					var tab ="";
+	 				for ( var i in response) {
+	 					html += "<li id='list"+response[i]+"'onClick=\"setDestUser('"+response[i]+"',0)\">" + response[i]+ "</li>";
+	 					tab += "<div id='"+response[i]+"' style='width:100%;height:100%; padding:20px; display:none;'></div>";
+	 				}
+	 				$("#list").append(html);
+	 				$("#response").append(tab);
+				}
+			});
+	    }
+	    
+	    function setDestUser(a,b){
+	    	dest_user = a;
+	    	$("#top").html(a);
+	    	$(curDIV).css('display','none');
+	    	curDIV = "#"+a;
+	    	$(curDIV).css('display','block');
+	    	$('#personChart').css('display','block');
+	    	$('#groupChart').css('display','none');
+	    	var listID = "#list"+a;
+	    	if(b == 1){
+	    		stopTips(listID);}
+	    }
+	    
+	    function setGroup(){
+	    	$("#top").html("群聊");
+	    	$(curDIV).css('display','none');
+	    	curDIV = "#groupTalk";
+	    	$(curDIV).css('display','block');
+	    	$('#personChart').css('display','none');
+	    	$('#groupChart').css('display','block');
+	    	$('#list').css('display','none');
+	    }
+	    function setSingle(){
+	    	$('#list').css('display','block');
+
+	    }
+	    
+	 	// 发送消息按钮事件
+        function send1() {
+            // 点对点消息，消息中必须包含对方的username
+            // 匹配后端ChatController中的 @MessageMapping("/personchart")
+            var content = dest_user+"|"+$("#message").val();
+            var mycontent = current_user+"|"+$("#message").val();
+    		var html = "<p style='backgroud:#fff; padding:5px 10px;'><span style='color: blue; font-weight:bold;'>" + current_user+":</span>";
+			html += "<span style='color: black; font-weight:bold;'>" + $("#message").val() + "</span></p>" ;
+            $(curDIV).append(html);
+            $("#message").val("");
+            stompClient.send("/personchat", {}, content);
+        }
+        function send2() {
+          	stompClient.send("/groupchat", {}, $("#message").val());
+          	 $("#message").val("");
+        }
+		
+</script>
+</body>
+</html>
